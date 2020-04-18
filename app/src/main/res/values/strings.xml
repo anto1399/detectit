@@ -3,4 +3,14 @@
     <string name="description_info">Info</string>
     <string name="request_permission">This app needs camera permission.</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+
+
+    <!-- Defined String  -->
+    <string name="login">Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="name_hint">Enter Name</string>
+    <string name="contact_hint">Phone Number</string>
+    <string name="password_hint">Enter Password</string>
+    <string name="con_pass_hint">Confirm Password</string>
+    <string name="back">Back</string>
 </resources>
