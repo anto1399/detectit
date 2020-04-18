@@ -108,6 +108,8 @@ public class AccountActivity extends AppCompatActivity {
             user.setName(Objects.requireNonNull(name_text.getText()).toString().trim());
             user.setContact(Objects.requireNonNull(contact_text.getText()).toString().trim());
             user.setPassword(Objects.requireNonNull(password_text.getText()).toString().trim());
+            user.setStatus(true);
+            preference.clear();
             preference.savePreferences(user, context);
         } catch (Exception e){
             Toast.makeText(AccountActivity.this, "Saving Error " + e.getMessage(), Toast.LENGTH_LONG).show();

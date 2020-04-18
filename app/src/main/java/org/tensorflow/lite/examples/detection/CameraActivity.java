@@ -17,9 +17,11 @@
 package org.tensorflow.lite.examples.detection;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -29,8 +31,12 @@ import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Trace;
@@ -39,19 +45,31 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Calendar;
+
 import org.tensorflow.lite.examples.detection.env.ImageUtils;
 import org.tensorflow.lite.examples.detection.env.Logger;
+
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public abstract class CameraActivity extends AppCompatActivity
     implements OnImageAvailableListener,
@@ -85,6 +103,7 @@ public abstract class CameraActivity extends AppCompatActivity
   private ImageView plusImageView, minusImageView;
   private SwitchCompat apiSwitchCompat;
   private TextView threadsTextView;
+  private Button shotButton;
 
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
@@ -92,6 +111,8 @@ public abstract class CameraActivity extends AppCompatActivity
     setTheme(R.style.AppTheme);
     super.onCreate(null);
     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
 
     setContentView(R.layout.activity_camera);
     Toolbar toolbar = findViewById(R.id.toolbar);
@@ -104,6 +125,7 @@ public abstract class CameraActivity extends AppCompatActivity
       requestPermission();
     }
 
+
     threadsTextView = findViewById(R.id.threads);
     plusImageView = findViewById(R.id.plus);
     minusImageView = findViewById(R.id.minus);
@@ -112,6 +134,7 @@ public abstract class CameraActivity extends AppCompatActivity
     gestureLayout = findViewById(R.id.gesture_layout);
     sheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
     bottomSheetArrowImageView = findViewById(R.id.bottom_sheet_arrow);
+    shotButton = findViewById(R.id.btn_screen_shot);
 
     ViewTreeObserver vto = gestureLayout.getViewTreeObserver();
     vto.addOnGlobalLayoutListener(
@@ -168,7 +191,57 @@ public abstract class CameraActivity extends AppCompatActivity
 
     plusImageView.setOnClickListener(this);
     minusImageView.setOnClickListener(this);
+
+
+    //take shot
+    takeScreenShot(this);
   }
+
+
+  public void takeScreenShot(Activity activity){
+    shotButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        try {
+
+          View view = getWindow().getDecorView().getRootView();
+          view.setDrawingCacheEnabled(true);
+
+          Bitmap bitmap = Bitmap.createBitmap(view.getDrawingCache());
+          view.setDrawingCacheEnabled(false);
+
+          //storing screen shot to download directory
+          String filePath = Environment.getExternalStorageDirectory() + "/Download/" + Calendar.getInstance().getTime().toString() + ".jpg";
+
+          File screenShot = new File(filePath);
+
+          FileOutputStream inputStream = new FileOutputStream(screenShot);
+          bitmap.compress(Bitmap.CompressFormat.JPEG, 100, inputStream);
+          inputStream.flush();
+          inputStream.close();
+
+          Toast.makeText(activity, "Detection result saved in downloads", Toast.LENGTH_LONG).show();
+
+          playSound();
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+      }
+    });
+  }
+
+  public void playSound() {
+    try {
+      Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+      Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+      r.play();
+    } catch (Exception e) {
+      Log.e("Notification exception", "" + e.getMessage());
+    }
+  }
+
 
   protected int[] getRgbBytes() {
     imageConverter.run();

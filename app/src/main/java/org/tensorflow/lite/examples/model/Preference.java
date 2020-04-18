@@ -15,6 +15,7 @@ public class Preference {
     //shared prefrences
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
+    private static SharedPreferences.Editor editor1;
     private static String APPLICATION_NAME = "org.tensorflow.lite.examples.detection";
 
 
@@ -22,6 +23,7 @@ public class Preference {
     public Preference(Activity activity) {
         preferences = activity.getSharedPreferences(APPLICATION_NAME, Context.MODE_PRIVATE);
         editor = preferences.edit();
+        editor1 = preferences.edit();
     }
 
     public void savePreferences(User user, Context context) {
@@ -29,8 +31,9 @@ public class Preference {
         editor.putString("name", user.getName());
         editor.putString("contact", user.getContact());
         editor.putString("password", user.getPassword());
+        editor.putBoolean("status", user.getStatus());
         editor.apply();
-        Toast.makeText(context, "Record Saved Succefully", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Record Saved Successfully", Toast.LENGTH_LONG).show();
     }
 
     public void clear() {
@@ -52,6 +55,20 @@ public class Preference {
 
     public String getPassword(){
         return preferences.getString("password", "");
+    }
+
+    public boolean getStatus(){
+        return preferences.getBoolean("status", false);
+    }
+
+    public void clearStatus(){
+        editor1.clear();
+        editor1.apply();
+    }
+
+    public void refreshStatus(User user, Context context) {
+        editor1.putBoolean("status", user.getStatus());
+        editor1.apply();
     }
 
 }

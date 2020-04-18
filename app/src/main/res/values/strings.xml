@@ -19,5 +19,6 @@
     <string name="option_one">SSD MobileNet &amp; MS COCO</string>
     <string name="option_two">Faster RCNN &amp; MS COCO</string>
     <string name="option_three">YOLO &amp; ADE20k</string>
+    <string name="screen_shot">Save Detection</string>
 
 </resources>

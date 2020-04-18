@@ -30,6 +30,12 @@ public class SplashScreen extends AppCompatActivity {
                     startActivity(intent);
                     finish();
 
+                } else if(!preference.getStatus()){
+
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+
                 } else {
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);

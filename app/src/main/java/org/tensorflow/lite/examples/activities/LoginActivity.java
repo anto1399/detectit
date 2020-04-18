@@ -3,8 +3,10 @@ package org.tensorflow.lite.examples.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.tensorflow.lite.examples.detection.R;
+import org.tensorflow.lite.examples.model.Preference;
+import org.tensorflow.lite.examples.model.User;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText contact_text, password_text;
     private Button login;
     private TextView account;
+    private Preference preference;
 
     private void init(){
         contact = findViewById(R.id.username);
@@ -39,25 +46,38 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
+        preference = new Preference(this);
+
         //initialising fields
         init();
         createAccount();
-        login();
+        login(this);
         onFocusGain();
     }
 
 
-    private void login(){
+    private void login(Context context){
       login.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               if(!validate(contact_text) || !validate(password_text)){
                 validateError();
               } else {
-                  launchHome();
+                  checkLogin(context);
               }
           }
       });
+    }
+
+
+    //checking
+    private void checkLogin(Context context){
+        if(preference.getContact().isEmpty() || preference.getContact().equals("") && preference.getPassword().isEmpty() || preference.getPassword().equals("")){
+            Toast.makeText(LoginActivity.this, "Please create a new account", Toast.LENGTH_LONG).show();
+        } else {
+            launchHome(context);
+        }
     }
 
 
@@ -115,9 +135,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //lunch home page
-    private void launchHome(){
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+    private void launchHome(Context context){
+        String con = Objects.requireNonNull(contact_text.getText()).toString().trim();
+        String pass = Objects.requireNonNull(password_text.getText()).toString().trim();
+
+        User user = new User();
+        user.setStatus(true);
+        preference.refreshStatus(user, context);
+
+        if(con.equals(preference.getContact()) && pass.equals(preference.getPassword())){
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(LoginActivity.this, "Account does not exist", Toast.LENGTH_LONG).show();
+        }
     }
 }

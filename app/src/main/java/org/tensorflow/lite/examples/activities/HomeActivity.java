@@ -1,20 +1,27 @@
 package org.tensorflow.lite.examples.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest.permission;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.tensorflow.lite.examples.detection.DetectorActivity;
 import org.tensorflow.lite.examples.detection.R;
 import org.tensorflow.lite.examples.model.Preference;
+import org.tensorflow.lite.examples.model.User;
+
+
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -38,13 +45,17 @@ public class HomeActivity extends AppCompatActivity {
         //shared preferences
         preference = new Preference(this);
 
+
+        //screen shot permission
+        ActivityCompat.requestPermissions(this, new String[]{WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+
         //init
         init();
         selectedOption();
         optionOneClick();
         optionTwoClick();
         optionThreeClick();
-        logout();
+        logout(this);
     }
 
 
@@ -67,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 selected = 2;
                 selectedOption();
-                launchCamera();
+                Toast.makeText(HomeActivity.this, "Implementation not available", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -79,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 selected = 3;
                 selectedOption();
-                launchCamera();
+                Toast.makeText(HomeActivity.this, "Implementation not available", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -118,11 +129,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //logging out
-    private void logout(){
+    private void logout(Context context){
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preference.clear();
+
+                //preference.clearStatus();
+
+                User user = new User();
+                user.setStatus(false);
+                preference.refreshStatus(user, context);
+
                 Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
