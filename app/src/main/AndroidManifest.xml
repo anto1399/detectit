@@ -17,9 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="org.tensorflow.lite.examples.activities.HomeActivity"></activity>
         <activity
             android:name="org.tensorflow.lite.examples.activities.AccountActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="org.tensorflow.lite.examples.activities.LoginActivity"
             android:theme="@style/AppTheme" />
@@ -27,7 +28,7 @@
             android:name=".DetectorActivity"
             android:label="@string/activity_name_detection"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="org.tensorflow.lite.examples.activities.SplashScreen"
             android:theme="@style/splash">

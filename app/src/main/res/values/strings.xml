@@ -13,4 +13,11 @@
     <string name="password_hint">Enter Password</string>
     <string name="con_pass_hint">Confirm Password</string>
     <string name="back">Back</string>
+    <string name="logout">Logout</string>
+
+    <string name="select_option">Select Option</string>
+    <string name="option_one">SSD MobileNet &amp; MS COCO</string>
+    <string name="option_two">Faster RCNN &amp; MS COCO</string>
+    <string name="option_three">YOLO &amp; ADE20k</string>
+
 </resources>

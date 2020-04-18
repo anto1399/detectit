@@ -3,9 +3,9 @@ package org.tensorflow.lite.examples.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +16,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.tensorflow.lite.examples.detection.R;
+import org.tensorflow.lite.examples.model.Preference;
+import org.tensorflow.lite.examples.model.User;
+
+import java.util.Objects;
 
 
 public class AccountActivity extends AppCompatActivity {
@@ -30,6 +34,7 @@ public class AccountActivity extends AppCompatActivity {
     private TextInputEditText contact_text;
     private TextInputEditText password_text;
     private TextInputEditText password_con_text;
+    private Preference preference;
 
     private void init(){
         back = findViewById(R.id.txt_back);
@@ -37,7 +42,7 @@ public class AccountActivity extends AppCompatActivity {
         contact = findViewById(R.id.contact);
         password = findViewById(R.id.password);
         confirm_password = findViewById(R.id.password_confirm);
-        create_account = findViewById(R.id.btn_create_account);
+        create_account = findViewById(R.id.btn_option_one);
         name_text = findViewById(R.id.name_text);
         contact_text = findViewById(R.id.contact_text);
         password_text = findViewById(R.id.password_text);
@@ -49,11 +54,14 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+        //preference
+        preference = new Preference(this);
+
         //fields initialization
         init();
         back();
         onFocusGain();
-        createAccount();
+        createAccount(this);
     }
 
     //going back
@@ -70,21 +78,43 @@ public class AccountActivity extends AppCompatActivity {
 
 
     //create a new account
-    private void createAccount(){
+    private void createAccount(Context context){
         create_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!validateName(name_text) || !validateContact(contact_text) || !validatePassword(password_text, password_con_text)){
 
                 } else {
-                    Toast.makeText(v.getContext(), "Validation pass", Toast.LENGTH_LONG).show();
+                    saveToPreference(context);
+                    launchHome();
                 }
-
             }
         });
     }
 
+    //lunch home page
+    private void launchHome(){
+        Intent intent = new Intent(AccountActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    //saving data to preferences
+    private void saveToPreference(Context context){
+        try {
+            int id = preference.getId();
+            User user = new User();
+            user.setId(id++);
+            user.setName(Objects.requireNonNull(name_text.getText()).toString().trim());
+            user.setContact(Objects.requireNonNull(contact_text.getText()).toString().trim());
+            user.setPassword(Objects.requireNonNull(password_text.getText()).toString().trim());
+            preference.savePreferences(user, context);
+        } catch (Exception e){
+            Toast.makeText(AccountActivity.this, "Saving Error " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    //validate name
     private boolean validateName(TextInputEditText name_text){
         if(!validate(name_text)){
             name.setError("Name field is required");
@@ -108,7 +138,6 @@ public class AccountActivity extends AppCompatActivity {
             return true;
         }
     }
-
 
     //password validation
     private boolean validatePassword(TextInputEditText pass, TextInputEditText con_pass){
@@ -167,10 +196,6 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
     //validation check
     private boolean validate(TextInputEditText editText){

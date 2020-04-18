@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private void init(){
         contact = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        login = findViewById(R.id.btn_create_account);
+        login = findViewById(R.id.btn_option_one);
         account = findViewById(R.id.txt_create_account);
         contact_text = findViewById(R.id.contact_text);
         password_text = findViewById(R.id.password_text);
@@ -55,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
               if(!validate(contact_text) || !validate(password_text)){
                 validateError();
               } else {
-                  Toast.makeText(v.getContext(), "Validation pass", Toast.LENGTH_LONG).show();
+                  launchHome();
               }
           }
       });
@@ -113,5 +112,12 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    //lunch home page
+    private void launchHome(){
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
