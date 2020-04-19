@@ -1,13 +1,12 @@
-package org.tensorflow.lite.examples.activities;
+package com.trinity.detectit.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.tensorflow.lite.examples.model.Preference;
+import com.trinity.detectit.model.Preference;
 
 import java.util.Timer;
 import java.util.TimerTask;

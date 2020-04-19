@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.activities;
+package com.trinity.detectit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +15,9 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.tensorflow.lite.examples.detection.R;
-import org.tensorflow.lite.examples.model.Preference;
-import org.tensorflow.lite.examples.model.User;
+import com.trinity.detectit.detection.R;
+import com.trinity.detectit.model.Preference;
+import com.trinity.detectit.model.User;
 
 import java.util.Objects;
 

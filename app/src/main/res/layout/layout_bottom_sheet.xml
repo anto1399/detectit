@@ -25,7 +25,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/icn_chevron_up" />
+
+        <Button
+            android:id="@+id/btn_screen_shot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:text="@string/screen_shot"
+            android:textColor="@color/cardview_light_background" />
+
+
 
     </LinearLayout>
 
@@ -150,22 +161,6 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_add" />
         </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_screen_shot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:text="@string/screen_shot"
-            android:textColor="@color/cardview_light_background" />
-
     </RelativeLayout>
 
     <View

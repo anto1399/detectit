@@ -13,10 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-package org.tensorflow.lite.examples.detection.customview;
+package com.trinity.detectit.detection.customview;
 
 import java.util.List;
-import org.tensorflow.lite.examples.detection.tflite.Classifier.Recognition;
+import com.trinity.detectit.detection.tflite.Classifier.Recognition;
 
 public interface ResultsView {
   public void setResults(final List<Recognition> results);

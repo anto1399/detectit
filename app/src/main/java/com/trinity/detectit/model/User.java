@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.model;
+package com.trinity.detectit.model;
 
 public class User {
 

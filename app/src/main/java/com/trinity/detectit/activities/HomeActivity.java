@@ -1,10 +1,9 @@
-package org.tensorflow.lite.examples.activities;
+package com.trinity.detectit.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest.permission;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,11 +14,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.tensorflow.lite.examples.detection.DetectorActivity;
-import org.tensorflow.lite.examples.detection.R;
-import org.tensorflow.lite.examples.model.Preference;
-import org.tensorflow.lite.examples.model.User;
+import com.trinity.detectit.detection.DetectorActivity;
+import com.trinity.detectit.model.Preference;
+import com.trinity.detectit.model.User;
 
+import com.trinity.detectit.detection.R;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 

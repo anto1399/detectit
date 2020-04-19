@@ -1,13 +1,10 @@
-package org.tensorflow.lite.examples.model;
+package com.trinity.detectit.model;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.widget.Toast;
-
-import org.tensorflow.lite.examples.activities.HomeActivity;
 
 
 public class Preference {
@@ -16,7 +13,7 @@ public class Preference {
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
     private static SharedPreferences.Editor editor1;
-    private static String APPLICATION_NAME = "org.tensorflow.lite.examples.detection";
+    private static String APPLICATION_NAME = "com.trinity.detectit.model";
 
 
     @SuppressLint("CommitPrefEdits")

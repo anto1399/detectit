@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.lite.examples.detection;
+package com.trinity.detectit.detection;
 
 import android.Manifest;
 import android.app.Activity;
@@ -42,10 +42,11 @@ import android.os.HandlerThread;
 import android.os.Trace;
 import androidx.annotation.NonNull;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.trinity.detectit.detection.env.ImageUtils;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
 import android.util.Size;
@@ -66,10 +67,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.Calendar;
 
-import org.tensorflow.lite.examples.detection.env.ImageUtils;
-import org.tensorflow.lite.examples.detection.env.Logger;
+import com.trinity.detectit.detection.R;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import com.trinity.detectit.detection.env.Logger;
 
 public abstract class CameraActivity extends AppCompatActivity
     implements OnImageAvailableListener,
